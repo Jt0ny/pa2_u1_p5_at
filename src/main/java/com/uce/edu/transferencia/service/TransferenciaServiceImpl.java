@@ -1,6 +1,7 @@
 package com.uce.edu.transferencia.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,27 +46,57 @@ public class TransferenciaServiceImpl implements ITransferenciaService{
 	public void realizar(String numeroOrigen,String numeroDestino, BigDecimal monto) {
 		// 1. buscar cta origen
 		
-		CuentaBancaria bancaria= this.bancariaRepository.seleccionar(numeroOrigen);
+		CuentaBancaria ctaOrigen= this.bancariaRepository.seleccionar(numeroOrigen);
 		
 		//2. consultar el saldo 
 		
+		BigDecimal saldoOrigen= ctaOrigen.getSaldo();		
 		//3.validar cuenta 
 		
-		//4.restar monto 
+		if(saldoOrigen.compareTo(monto)>=0){
+			
+			//4.restar monto 
+			
+			BigDecimal nuevoSaldoOrigen=saldoOrigen.subtract(monto);
+			
+			//5. actualizar cta origen 
+			
+			ctaOrigen.setSaldo(nuevoSaldoOrigen);
+			this.bancariaRepository.actualizar(ctaOrigen);
+			
+			//6.buscar cta destino
+			
+			CuentaBancaria ctaDestino=this.bancariaRepository.seleccionar(numeroDestino);
+			
+			//7.consultar saldo
+			
+			BigDecimal saldoDestino= ctaDestino.getSaldo();
+			
+			//8. sumar monto
+			
+			BigDecimal nuevoSaldoDestino=saldoDestino.add(monto);
+			
+			//9.actualizar cta destino
+			
+			ctaDestino.setSaldo(nuevoSaldoDestino);
+			this.bancariaRepository.actualizar(ctaDestino);
+			
+			//10.crear transferencia 
+			
+			Transferencia transferencia =new Transferencia();
+			transferencia.setCuentaOrigen(ctaOrigen);
+			transferencia.setCuentaDestino(ctaDestino);
+			transferencia.setFecha(LocalDateTime.now());
+			transferencia.setMonto(monto);
+			transferencia.setNumero("123");
+			
+			this.iTransferenciaRepository.insertar(transferencia);
+			System.out.println("Transferencia realizada con exito");
+			
+		}else {
+			System.out.println("Saldo no disponible");
+		}
 		
-		//5. actualizar cta origen 
-		
-		
-		//6.buscar cta destino
-		
-		
-		//7.consultar saldo
-		
-		//8. sumar monto
-		
-		//9.actualizar cta destino
-		
-		//10.crear transferencia 
 	}
 
 }

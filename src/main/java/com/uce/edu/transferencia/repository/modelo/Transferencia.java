@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class Transferencia {
 	
 	private String numero;

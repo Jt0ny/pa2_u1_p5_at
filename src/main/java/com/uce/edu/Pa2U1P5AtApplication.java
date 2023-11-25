@@ -11,19 +11,21 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.uce.edu.ioc.di.Estudiante;
 import com.uce.edu.repository.modelo.Materia;
 import com.uce.edu.service.IMateriaService;
+import com.uce.edu.transferencia.repository.modelo.CuentaBancaria;
+import com.uce.edu.transferencia.service.ICuentaBancariaService;
+import com.uce.edu.transferencia.service.ITransferenciaService;
 
 @SpringBootApplication
 public class Pa2U1P5AtApplication implements CommandLineRunner{
 	
 
 	@Autowired
-	private Materia materia;
+	private ITransferenciaService iTransferenciaService;
 	
 	@Autowired
-	private Materia materia1;
+	private ICuentaBancariaService bancariaService;
 	
-	@Autowired
-	private Materia materia2;
+	
 	
 	
 	public static void main(String[] args)  {
@@ -33,19 +35,35 @@ public class Pa2U1P5AtApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		this.materia.setNombre("Avanzada II");
-		System.out.println(this.materia);
 		
-		System.out.println(this.materia1);
+		//1.Crear cuentas
 		
-		this.materia1.setNombre("Nuevo Nombre");
-		System.out.println(this.materia1);
-		System.out.println(this.materia);
-	  
-		this.materia2.setNombre("Nombre Final");
-		System.out.println(this.materia2);
-		System.out.println(this.materia1);
-		System.out.println(this.materia);
+		CuentaBancaria ctaOrigen= new CuentaBancaria();
+		ctaOrigen.setCedulaPropietario("1726");
+		ctaOrigen.setNumero("1234");
+		ctaOrigen.setSaldo(new BigDecimal(100));
+		this.bancariaService.guardar(ctaOrigen);
+		
+		CuentaBancaria ctaDestino= new CuentaBancaria();
+		ctaDestino.setCedulaPropietario("1725");
+		ctaDestino.setNumero("12345");
+		ctaDestino.setSaldo(new BigDecimal(200));
+		this.bancariaService.guardar(ctaDestino);
+		
+		this.iTransferenciaService.realizar("1234", "12345", new BigDecimal(20));
+		
+//		System.out.println(ctaOrigen);
+//		System.out.println(ctaDestino);
+		
+		CuentaBancaria ctaOrigen1= this.bancariaService.buscar("1234");
+		System.out.println(ctaOrigen1);
+		
+		CuentaBancaria ctaDestino1= this.bancariaService.buscar("12345");
+		System.out.println(ctaDestino1);
+		
+		
+		
+		
 		
 	
 	}

@@ -15,11 +15,20 @@ public class Transferencia {
 	private CuentaBancaria cuentaDestino;
 	
 	
-	@Override
+	
+	
+	/*@Override
 	public String toString() {
 		return "Transferencia [fecha=" + fecha + ", monto=" + monto + ", cuentaOrigen=" + cuentaOrigen
 				+ ", cuentaDestino=" + cuentaDestino + "]";
+	}*/
+
+	@Override
+	public String toString() {
+		return "Transferencia [numero=" + numero + ", fecha=" + fecha + ", monto=" + monto + ", cuentaOrigen="
+				+ cuentaOrigen + ", cuentaDestino=" + cuentaDestino + "]";
 	}
+
 
 	//get y set
 	public LocalDateTime getFecha() {

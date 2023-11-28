@@ -2,6 +2,7 @@ package com.uce.edu.transferencia.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,9 @@ public class TransferenciaServiceImpl implements ITransferenciaService{
 
 	@Override
 	public void realizar(String numeroOrigen,String numeroDestino, BigDecimal monto) {
+		
+		List<Transferencia> listaTrans= new ArrayList<>();
+		
 		// 1. buscar cta origen
 		
 		CuentaBancaria ctaOrigen= this.bancariaRepository.seleccionar(numeroOrigen);
@@ -90,10 +94,18 @@ public class TransferenciaServiceImpl implements ITransferenciaService{
 			transferencia.setCuentaDestino(ctaDestino);
 			transferencia.setFecha(LocalDateTime.now());
 			transferencia.setMonto(monto);
-			transferencia.setNumero("123");
 			
+			Integer i=0;
+			for(Transferencia trans:listaTrans) {
+				i++;
+				transferencia.setNumero(i.toString());
+			}
+		
+			//transferencia.setNumero("1");
 			this.iTransferenciaRepository.insertar(transferencia);
+			listaTrans.add(transferencia);
 			System.out.println("Transferencia realizada con exito");
+		
 			
 		}else {
 			System.out.println("Saldo no disponible");

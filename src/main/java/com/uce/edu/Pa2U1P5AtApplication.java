@@ -1,6 +1,7 @@
 package com.uce.edu;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import com.uce.edu.ioc.di.Estudiante;
 import com.uce.edu.repository.modelo.Materia;
 import com.uce.edu.service.IMateriaService;
 import com.uce.edu.transferencia.repository.modelo.CuentaBancaria;
+import com.uce.edu.transferencia.repository.modelo.Transferencia;
 import com.uce.edu.transferencia.service.ICuentaBancariaService;
 import com.uce.edu.transferencia.service.ITransferenciaService;
 
@@ -49,18 +51,40 @@ public class Pa2U1P5AtApplication implements CommandLineRunner{
 		ctaDestino.setNumero("12345");
 		ctaDestino.setSaldo(new BigDecimal(200));
 		this.bancariaService.guardar(ctaDestino);
+		//this.iTransferenciaService.realizar("1234", "12345", new BigDecimal(20));
 		
-		this.iTransferenciaService.realizar("1234", "12345", new BigDecimal(20));
 		
-//		System.out.println(ctaOrigen);
-//		System.out.println(ctaDestino);
+		System.out.println(ctaOrigen);
+		System.out.println(ctaDestino);
+		
+		
+		//METODO DEPOSITAR
+		this.bancariaService.depositar("1234", new BigDecimal(100));
 		
 		CuentaBancaria ctaOrigen1= this.bancariaService.buscar("1234");
 		System.out.println(ctaOrigen1);
+	
+	
+	
+//		CuentaBancaria ctaOrigen1= this.bancariaService.buscar("1234");
+//		System.out.println(ctaOrigen1);
+//		
+//		CuentaBancaria ctaDestino1= this.bancariaService.buscar("12345");
+//		System.out.println(ctaDestino1);
+//		
+		/*this.iTransferenciaService.realizar("1234", "12345", new BigDecimal(30));
+		this.iTransferenciaService.realizar("12345", "1234", new BigDecimal(20));
 		
-		CuentaBancaria ctaDestino1= this.bancariaService.buscar("12345");
-		System.out.println(ctaDestino1);
+//		Construir un reporte del estado de cuenta de todas las transferencias
 		
+		List<Transferencia> lista= this.iTransferenciaService.buscarTodos();
+		int i =0;
+		for(Transferencia trans:lista) {
+			i++;
+			System.out.println(i+":"+trans);
+		}*/
+		
+	
 		
 		
 		

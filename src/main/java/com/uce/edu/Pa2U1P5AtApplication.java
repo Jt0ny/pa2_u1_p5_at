@@ -20,15 +20,31 @@ import com.uce.edu.transferencia.service.ITransferenciaService;
 @SpringBootApplication
 public class Pa2U1P5AtApplication implements CommandLineRunner{
 	
-
+	
+	//INYECCION POR ATRIBUTO
 	@Autowired
 	private ITransferenciaService iTransferenciaService;
 	
+	/*INYECCION POR METODOS(solo set)
+	private ITransferenciaService iTransferenciaService;
+	
+	@Autowired
+	public void setiTransferenciaService(ITransferenciaService iTransferenciaService) {
+		this.iTransferenciaService = iTransferenciaService;
+	}*
+
+	
+	INYECCION POR CONSTRUCTOR
+	 private ITransferenciaService iTransferenciaService;
+	
+	@Autowired
+	public Pa2U1P5AtApplication (ITransferenciaService iTransferenciaService) {
+		this.iTransferenciaService=iTransferenciaService;
+	}*/
+	
+	
 	@Autowired
 	private ICuentaBancariaService bancariaService;
-	
-	
-	
 	
 	public static void main(String[] args)  {
 		SpringApplication.run(Pa2U1P5AtApplication.class, args);

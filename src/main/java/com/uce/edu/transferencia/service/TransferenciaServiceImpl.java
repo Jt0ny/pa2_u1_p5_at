@@ -95,18 +95,22 @@ public class TransferenciaServiceImpl implements ITransferenciaService{
 			transferencia.setFecha(LocalDateTime.now());
 			transferencia.setMonto(monto);
 			
-			Integer i=0;
-			for(Transferencia trans:listaTrans) {
-				i++;
-				transferencia.setNumero(i.toString());
-			}
 		
-			//transferencia.setNumero("1");
+		
+			transferencia.setNumero("1");
 			this.iTransferenciaRepository.insertar(transferencia);
 			listaTrans.add(transferencia);
 			System.out.println("Transferencia realizada con exito");
 		
-			
+			Integer i=0;
+			for(Transferencia trans:listaTrans) {
+				i++;
+				String num = i.toString();
+				trans.setNumero(num);
+				this.iTransferenciaRepository.actualizar(trans);
+				
+			}
+		
 		}else {
 			System.out.println("Saldo no disponible");
 		}
